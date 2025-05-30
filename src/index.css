@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+/* Base */
+/* @import url('./styles/_variables.css');
+@import url('./styles/_base.css'); */
+
+/* Components */
+/* @import url('./styles/instaspots.css');
+@import url('./styles/hero.css');
+@import url('./styles/profile.css');
+@import url('./styles/cards.css');
+@import url('./styles/modal.css');
+@import url('./styles/footer.css'); */
+
+/* css reset */
+@import url("./styles/reset.css");
