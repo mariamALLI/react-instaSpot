@@ -1,8 +1,9 @@
 import cards from '../cards.json';
-import { Box, Typography, IconButton, Modal } from '@mui/material';
+import { Box, Typography, IconButton, Modal, CircularProgress } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { useState, forwardRef, useImperativeHandle } from 'react';
+import { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
+import { fetchTravelImages } from '../services/api';
 
 // Import all images
 import image1 from '../assets/images/pexels-kassandre-pedro-8639743 1-1.png';
@@ -11,7 +12,6 @@ import image3 from '../assets/images/pexels-kassandre-pedro-8639743 1-3.png';
 import image4 from '../assets/images/pexels-kassandre-pedro-8639743 1-4.png';
 import image5 from '../assets/images/pexels-kassandre-pedro-8639743 1-5.png';
 import image6 from '../assets/images/pexels-kassandre-pedro-8639743 1-6.png';
-import { HorizontalRule } from '@mui/icons-material';
 
 // Map image paths to imported images
 const imageMap = {
@@ -26,7 +26,34 @@ const imageMap = {
 const Cards = forwardRef((props, ref) => {
   const [likedCards, setLikedCards] = useState({});
   const [selectedImage, setSelectedImage] = useState(null);
-  const [allCards, setAllCards] = useState(cards);
+  const [allCards, setAllCards] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const loadImages = async () => {
+      try {
+        setLoading(true);
+        const apiImages = await fetchTravelImages();
+        
+        if (apiImages) {
+          setAllCards(apiImages);
+        } else {
+          // Fallback to local images if API fails
+          setAllCards(cards);
+        }
+      } catch (err) {
+        console.error('Error loading images:', err);
+        setError('Failed to load images from API');
+        // Fallback to local images
+        setAllCards(cards);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadImages();
+  }, []);
 
   const handleLike = (index) => {
     setLikedCards(prev => ({
@@ -54,6 +81,25 @@ const Cards = forwardRef((props, ref) => {
     setSelectedImage(null);
   };
 
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box sx={{ textAlign: 'center', p: 3, color: 'error.main' }}>
+        <Typography>{error}</Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+          Showing fallback images instead.
+        </Typography>
+      </Box>
+    );
+  }
+
   return (
     <Box 
       sx={{ 
@@ -64,8 +110,8 @@ const Cards = forwardRef((props, ref) => {
           md: 'repeat(3, 1fr)'
         },
         gap: 3,
-        p: 3,
-        backgroundColor: 'background.default',
+        p: '1rem 2.5rem',
+        backgroundColor: 'background.default'
       }}
     >
       {allCards.map((card, index) => (
@@ -85,7 +131,7 @@ const Cards = forwardRef((props, ref) => {
           onClick={() => handleImageClick(card, index)}
         >
           <img
-            src={card.image.startsWith('data:') ? card.image : imageMap[card.image]}
+            src={card.image.startsWith('data:') ? card.image : (imageMap[card.image] || card.image)}
             alt={card.text}
             style={{
               width: '100%',
@@ -157,7 +203,7 @@ const Cards = forwardRef((props, ref) => {
           {selectedImage && (
             <>
               <img
-                src={selectedImage.image.startsWith('data:') ? selectedImage.image : imageMap[selectedImage.image]}
+                src={selectedImage.image.startsWith('data:') ? selectedImage.image : (imageMap[selectedImage.image] || selectedImage.image)}
                 alt={selectedImage.text}
                 style={{
                   width: '100%',

@@ -2,6 +2,7 @@ import { Profile } from './components/profile'
 import { Logo } from './components/navbar'
 import { Cards, Horizontaline } from './components/cards'
 import { useRef } from 'react'
+import { Footer } from './components/footer'
 
 function App() {
   const cardsRef = useRef(null);
@@ -19,6 +20,7 @@ function App() {
       <Horizontaline/>
       <Cards ref={cardsRef} />
       <Horizontaline/>
+      <Footer />
     </div>
   )
 }

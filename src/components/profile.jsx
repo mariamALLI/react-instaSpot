@@ -156,7 +156,7 @@ function Profile({ onNewPost }) {
   return (
     <>
       <Paper 
-        elevation={3} 
+        elevation={0} 
         sx={{ 
           p: 3, 
           bgcolor: '#fcf5e5',

@@ -4,7 +4,7 @@ function Logo(){
     return (
         <header className="hero" role="banner">
        { /*Logo Section */}
-        <nav className="hero__logo px-[.5rem] py-[1.2rem] flex justify-center" role="navigation"  aria-label="Main navigation">
+        <nav className="hero__logo px-[0rem] py-[1rem] flex justify-center" role="navigation"  aria-label="Main navigation">
           <img
             className="hero__logo-image"
             src={InstaspotLogo}
