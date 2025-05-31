@@ -78,7 +78,7 @@ const Cards = forwardRef((props, ref) => {
   if (isLoading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
-        <CircularProgress />
+        <CircularProgress sx={{backgroundColor: 'background.default'}} />
       </Box>
     );
   }
