@@ -20,6 +20,7 @@
     "@react-aria/utils": "^3.29.0",
     "@react-aria/visually-hidden": "^3.8.23",
     "@tailwindcss/vite": "^4.1.8",
+    "@tanstack/react-query": "^5.79.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.8"

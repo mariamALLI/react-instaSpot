@@ -2,8 +2,9 @@ import cards from '../cards.json';
 import { Box, Typography, IconButton, Modal, CircularProgress } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
+import { useState, forwardRef, useImperativeHandle } from 'react';
 import { fetchTravelImages } from '../services/api';
+import { useQuery } from '@tanstack/react-query';
 
 // Import all images
 import image1 from '../assets/images/pexels-kassandre-pedro-8639743 1-1.png';
@@ -26,34 +27,24 @@ const imageMap = {
 const Cards = forwardRef((props, ref) => {
   const [likedCards, setLikedCards] = useState({});
   const [selectedImage, setSelectedImage] = useState(null);
-  const [allCards, setAllCards] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [localCards, setLocalCards] = useState(cards);
 
-  useEffect(() => {
-    const loadImages = async () => {
-      try {
-        setLoading(true);
-        const apiImages = await fetchTravelImages();
-        
-        if (apiImages) {
-          setAllCards(apiImages);
-        } else {
-          // Fallback to local images if API fails
-          setAllCards(cards);
-        }
-      } catch (err) {
-        console.error('Error loading images:', err);
-        setError('Failed to load images from API');
-        // Fallback to local images
-        setAllCards(cards);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Use React Query to fetch images
+  const { data: apiCards, isLoading, error } = useQuery({
+    queryKey: ['travelImages'],
+    queryFn: fetchTravelImages,
+    staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
+    retry: 2, // Retry failed requests twice
+    refetchOnWindowFocus: false, // Don't refetch when window regains focus
+    onSuccess: (data) => {
+      console.log('Query succeeded:', data);
+    },
+    onError: (error) => {
+      console.error('Query failed:', error);
+    }
+  });
 
-    loadImages();
-  }, []);
+  console.log('Query state:', { apiCards, isLoading, error });
 
   const handleLike = (index) => {
     setLikedCards(prev => ({
@@ -63,7 +54,7 @@ const Cards = forwardRef((props, ref) => {
   };
 
   const handleNewPost = (newPost) => {
-    setAllCards(prev => [{
+    setLocalCards(prev => [{
       image: newPost.image,
       text: newPost.text
     }, ...prev]);
@@ -81,7 +72,10 @@ const Cards = forwardRef((props, ref) => {
     setSelectedImage(null);
   };
 
-  if (loading) {
+  // Use API cards if available, otherwise use local cards
+  const displayCards = apiCards || localCards;
+
+  if (isLoading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
         <CircularProgress />
@@ -92,7 +86,7 @@ const Cards = forwardRef((props, ref) => {
   if (error) {
     return (
       <Box sx={{ textAlign: 'center', p: 3, color: 'error.main' }}>
-        <Typography>{error}</Typography>
+        <Typography>Failed to load images from API</Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
           Showing fallback images instead.
         </Typography>
@@ -114,7 +108,7 @@ const Cards = forwardRef((props, ref) => {
         backgroundColor: 'background.default'
       }}
     >
-      {allCards.map((card, index) => (
+      {displayCards.map((card, index) => (
         <Box
           key={index}
           sx={{
