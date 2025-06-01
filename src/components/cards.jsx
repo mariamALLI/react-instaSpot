@@ -28,6 +28,7 @@ const Cards = forwardRef((props, ref) => {
   const [likedCards, setLikedCards] = useState({});
   const [selectedImage, setSelectedImage] = useState(null);
   const [localCards, setLocalCards] = useState(cards);
+  const [userPosts, setUserPosts] = useState([]); // New state for user posts
 
   // Use React Query to fetch images
   const { data: apiCards, isLoading, error } = useQuery({
@@ -54,9 +55,11 @@ const Cards = forwardRef((props, ref) => {
   };
 
   const handleNewPost = (newPost) => {
-    setLocalCards(prev => [{
+    // Add new post to userPosts
+    setUserPosts(prev => [{
       image: newPost.image,
-      text: newPost.text
+      text: newPost.text,
+      isUserPost: true // Flag to identify user posts
     }, ...prev]);
   };
 
@@ -72,8 +75,11 @@ const Cards = forwardRef((props, ref) => {
     setSelectedImage(null);
   };
 
-  // Use API cards if available, otherwise use local cards
-  const displayCards = apiCards || localCards;
+  // Combine user posts with API/local cards
+  const displayCards = [
+    ...userPosts, // User posts always come first
+    ...(apiCards || localCards) // Then API or local cards
+  ];
 
   if (isLoading) {
     return (

@@ -333,7 +333,7 @@ function Profile({ onNewPost }) {
         maxWidth="sm"
         fullWidth
       >
-        <DialogTitle>Create New Post</DialogTitle>
+        <DialogTitle sx={{backgroundColor: '#212121', color: '#fcf5e5'}}>Create New Post</DialogTitle>
         <DialogContent>
           <Box sx={{ pt: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
             {newPostData.image && (
@@ -353,7 +353,7 @@ function Profile({ onNewPost }) {
             <Button
               variant="outlined"
               component="label"
-              sx={{ textTransform: 'none' }}
+              sx={{ textTransform: 'none', backgroundColor: '#212121', color: '#fcf5e5' }}
             >
               Upload Image
               <input
@@ -374,11 +374,12 @@ function Profile({ onNewPost }) {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleNewPostClose}>Cancel</Button>
+          <Button onClick={handleNewPostClose} sx={{color: '#212121'}}>Cancel</Button>
           <Button 
             onClick={handlePostSubmit} 
             variant="contained"
             disabled={!newPostData.image || !newPostData.caption}
+            sx={{backgroundColor: '#212121', color: '#fcf5e5'}}
           >
             Post
           </Button>
@@ -392,7 +393,7 @@ function Profile({ onNewPost }) {
         maxWidth="sm"
         fullWidth
       >
-        <DialogTitle>Edit Profile</DialogTitle>
+        <DialogTitle sx={{backgroundColor: '#212121', color: '#fcf5e5'}}>Edit Profile</DialogTitle>
         <DialogContent>
           <Box sx={{ pt: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
             {/* Profile Image Upload */}
@@ -404,7 +405,7 @@ function Profile({ onNewPost }) {
               <Button
                 variant="outlined"
                 component="label"
-                sx={{ textTransform: 'none' }}
+                sx={{ textTransform: 'none', backgroundColor: '#212121', color: '#fcf5e5' }}
               >
                 Change Profile Picture
                 <input
@@ -445,8 +446,8 @@ function Profile({ onNewPost }) {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSave} variant="contained">Save</Button>
+          <Button onClick={handleClose} sx={{color: '#212121'}}>Cancel</Button>
+          <Button onClick={handleSave} variant="contained" sx={{backgroundColor: '#212121', color: '#fcf5e5'}}>Save</Button>
         </DialogActions>
       </Dialog>
     </>
