@@ -125,10 +125,10 @@ The color scheme is based on a warm, travel-inspired palette:
 ### Code Style
 
 The project follows modern React best practices:
+
 - Functional components with hooks
 - Proper prop typing
 - Component composition
-- Error boundaries
 - Responsive design patterns
 
 ## Acknowledgments
