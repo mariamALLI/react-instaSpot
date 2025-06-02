@@ -6,7 +6,7 @@ import { useButton } from '@react-aria/button';
 import { useState } from 'react';
 
 function Profile({ onNewPost }) {
-  const [open, setOpen] = useState(false);
+  const [openEditProfile, setOpenEditProfile] = useState(false);
   const [newPostOpen, setNewPostOpen] = useState(false);
   const [newPostData, setNewPostData] = useState({
     image: null,
@@ -24,9 +24,9 @@ function Profile({ onNewPost }) {
   });
   const [previewImage, setPreviewImage] = useState(null);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => {
-    setOpen(false);
+  const handleOpenEditProfile = () => setOpenEditProfile(true);
+  const handleCloseEditProfile = () => {
+    setOpenEditProfile(false);
     setErrors({ name: '', bio: '', image: '' });
     setPreviewImage(null);
   };
@@ -116,7 +116,7 @@ function Profile({ onNewPost }) {
     return isValid;
   };
 
-  const handleSave = () => {
+  const handleSaveProfile = () => {
     if (validateForm()) {
       // Update profileData with the new image
       const updatedProfileData = {
@@ -127,7 +127,7 @@ function Profile({ onNewPost }) {
       
       // Here you would typically save the changes to your backend
       console.log('Saving profile changes:', updatedProfileData);
-      handleClose();
+      handleCloseEditProfile();
     }
   };
 
@@ -146,7 +146,7 @@ function Profile({ onNewPost }) {
   };
 
   const editButtonProps = useButton({
-    onPress: handleOpen
+    onPress: handleOpenEditProfile
   }).buttonProps;
 
   const newPostButtonProps = useButton({
@@ -388,8 +388,8 @@ function Profile({ onNewPost }) {
 
       {/* Edit Profile Dialog */}
       <Dialog 
-        open={open} 
-        onClose={handleClose}
+        open={openEditProfile} 
+        onClose={handleCloseEditProfile}
         maxWidth="sm"
         fullWidth
       >
@@ -446,8 +446,8 @@ function Profile({ onNewPost }) {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} sx={{color: '#212121'}}>Cancel</Button>
-          <Button onClick={handleSave} variant="contained" sx={{backgroundColor: '#212121', color: '#fcf5e5'}}>Save</Button>
+          <Button onClick={handleCloseEditProfile} sx={{color: '#212121'}}>Cancel</Button>
+          <Button onClick={handleSaveProfile} variant="contained" sx={{backgroundColor: '#212121', color: '#fcf5e5'}}>Save</Button>
         </DialogActions>
       </Dialog>
     </>

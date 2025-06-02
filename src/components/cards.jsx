@@ -27,16 +27,15 @@ const imageMap = {
 const Cards = forwardRef((props, ref) => {
   const [likedCards, setLikedCards] = useState({});
   const [selectedImage, setSelectedImage] = useState(null);
-  const [localCards, setLocalCards] = useState(cards);
-  const [userPosts, setUserPosts] = useState([]); // New state for user posts
+  const [userPosts, setUserPosts] = useState([]); // State for user posts
 
   // Use React Query to fetch images
   const { data: apiCards, isLoading, error } = useQuery({
     queryKey: ['travelImages'],
     queryFn: fetchTravelImages,
-    staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
-    retry: 2, // Retry failed requests twice
-    refetchOnWindowFocus: false, // Don't refetch when window regains focus
+    staleTime: 5 * 60 * 1000,
+    retry: 2,
+    refetchOnWindowFocus: false,
     onSuccess: (data) => {
       console.log('Query succeeded:', data);
     },
@@ -55,11 +54,10 @@ const Cards = forwardRef((props, ref) => {
   };
 
   const handleNewPost = (newPost) => {
-    // Add new post to userPosts
     setUserPosts(prev => [{
       image: newPost.image,
       text: newPost.text,
-      isUserPost: true // Flag to identify user posts
+      isUserPost: true
     }, ...prev]);
   };
 
@@ -75,10 +73,10 @@ const Cards = forwardRef((props, ref) => {
     setSelectedImage(null);
   };
 
-  // Combine user posts with API/local cards
+  // Combine user posts with API cards or fallback to local cards
   const displayCards = [
-    ...userPosts, // User posts always come first
-    ...(apiCards || localCards) // Then API or local cards
+    ...userPosts,
+    ...(apiCards || cards) // Use cards directly as fallback
   ];
 
   if (isLoading) {

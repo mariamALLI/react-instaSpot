@@ -9,8 +9,6 @@ export async function fetchTravelImages() {
             return null;
         }
 
-        console.log('Starting to fetch images from Unsplash...');
-        console.log('Using API key:', config.UNSPLASH_API_KEY);
         
         const url = `https://api.unsplash.com/photos/random?count=6&query=travel,landscape&client_id=${config.UNSPLASH_API_KEY}`;
         console.log('Request URL:', url);
@@ -35,7 +33,6 @@ export async function fetchTravelImages() {
             name: image.alt_description || 'Travel Image'
         }));
         
-        console.log('Formatted data:', formattedData);
         return formattedData;
     } catch (error) {
         console.error('Error fetching images:', error);
@@ -43,34 +40,3 @@ export async function fetchTravelImages() {
         return null;
     }
 }
-
-// Function to fetch location data from OpenTripMap
-export async function fetchLocationData(lat, lon) {
-    try {
-        // Check if API key is set
-        if (!config.OPENTRIPMAP_API_KEY || config.OPENTRIPMAP_API_KEY === 'YOUR_OPENTRIPMAP_API_KEY') {
-            console.error('OpenTripMap API key is not configured');
-            return null;
-        }
-
-        console.log('Fetching location data...');
-        const response = await fetch(
-            `https://api.opentripmap.com/0.1/en/places/radius?radius=1000&lon=${lon}&lat=${lat}&apikey=${config.OPENTRIPMAP_API_KEY}`
-        );
-
-        if (!response.ok) {
-            throw new Error(`OpenTripMap API error: ${response.status} ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        console.log('Successfully fetched location data');
-        
-        return data.features.map(place => ({
-            name: place.properties.name,
-            description: place.properties.kinds
-        }));
-    } catch (error) {
-        console.error('Error fetching location data:', error);
-        return null;
-    }
-} 
