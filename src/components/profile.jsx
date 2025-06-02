@@ -232,7 +232,7 @@ function Profile({ onNewPost }) {
                   fontSize: { xs: '1.3rem', md: '2rem' }, 
                   fontWeight: '500', 
                   textAlign: { xs: 'center', md: 'left' },
-                  width: { xs: '100%', md: '35%' },
+                  width: { xs: '100%', md: '30ch' },
                   lineHeight: { xs: 1, md: 1.1 },
                 }}
               >
@@ -247,7 +247,7 @@ function Profile({ onNewPost }) {
                   fontSize: { xs: '1.1rem', md: '1rem' },
                   fontWeight: '500',
                   lineHeight: 1.2,
-                  width: { xs: '100%', md: '35%' },
+                  width: { xs: '100%', md: '30ch' },
                 }}
               >
                 {profileData.bio}
@@ -311,6 +311,7 @@ function Profile({ onNewPost }) {
                   color: '#fcf5e5',
                   padding: '.78rem 2rem',
                   textTransform: 'none',
+                  marginRight: {xs: '' , md:'-30rem'},
                   fontWeight: '600',
                   '&:hover': {
                     backgroundColor: '#212121',
