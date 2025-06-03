@@ -48,7 +48,6 @@ pnpm install
 ```javascript
 export const config = {
     UNSPLASH_API_KEY: 'your_unsplash_api_key',
-    OPENTRIPMAP_API_KEY: 'your_opentripmap_api_key'
 };
 ```
 
