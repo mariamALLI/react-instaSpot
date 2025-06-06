@@ -1,5 +1,5 @@
 import cards from '../cards.json';
-import { Box, Typography, IconButton, Modal, CircularProgress } from '@mui/material';
+import { Box, Typography, IconButton, Modal, CircularProgress, Skeleton } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useState, forwardRef, useImperativeHandle } from 'react';
@@ -81,8 +81,43 @@ const Cards = forwardRef((props, ref) => {
 
   if (isLoading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
-        <CircularProgress sx={{backgroundColor: 'background.default'}} />
+      <Box 
+        sx={{ 
+          display: 'grid',
+          gridTemplateColumns: {
+            xs: '1fr',
+            sm: 'repeat(2, 1fr)',
+            md: 'repeat(3, 1fr)'
+          },
+          gap: 3,
+          p: '1rem 2.5rem',
+          backgroundColor: 'background.default'
+        }}
+      >
+        {[...Array(6)].map((_, index) => (
+          <Box
+            key={index}
+            sx={{
+              borderRadius: 2,
+              overflow: 'hidden',
+              boxShadow: 1,
+            }}
+          >
+            <Skeleton 
+              variant="rectangular" 
+              height={300} 
+              sx={{ bgcolor: 'rgba(0, 0, 0, 0.1)' }}
+            />
+            <Box sx={{ p: 2 }}>
+              <Skeleton 
+                variant="text" 
+                width="80%" 
+                height={24} 
+                sx={{ bgcolor: 'rgba(0, 0, 0, 0.1)' }}
+              />
+            </Box>
+          </Box>
+        ))}
       </Box>
     );
   }
