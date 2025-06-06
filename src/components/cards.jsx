@@ -1,5 +1,5 @@
 import cards from '../cards.json';
-import { Box, Typography, IconButton, Modal, CircularProgress, Skeleton } from '@mui/material';
+import { Box, Typography, IconButton, Modal, Skeleton } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useState, forwardRef, useImperativeHandle } from 'react';
