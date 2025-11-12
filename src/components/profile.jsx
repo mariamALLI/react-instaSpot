@@ -1,4 +1,4 @@
-import profileImage from "../assets/images/avatar.png";
+import profileImage from "../assets/images/avatar2.jpeg";
 import newPostIcon from "../assets/images/newposticon.svg";
 import { Avatar, Typography, Button, Paper, Box, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
@@ -13,8 +13,8 @@ function Profile({ onNewPost }) {
     caption: ''
   });
   const [profileData, setProfileData] = useState({
-    name: "Aliaune Damala Bouga Time Bongo Puru Nacka Lu Lu Lu Badara Akon...",
-    bio: "Known mononymously as Akon (/ˈeɪkɒn/), is a Senegalese-American singer, record producer, and entrepreneur. An influential figure in modern world...",
+    name: "Mariam Alli",
+    bio: "A passionate front-end developer and UI/UX enthusiast. Love travelling and exploring.",
     image: profileImage
   });
   const [errors, setErrors] = useState({
@@ -159,12 +159,12 @@ function Profile({ onNewPost }) {
         elevation={0} 
         sx={{ 
           p: 3, 
-          bgcolor: '#fcf5e5',
+          bgcolor: '#d196f3ff',
           padding: { md: '1.5rem 3rem' }
         }}
       >
         <Box 
-          className="profile wrapper" 
+          className="profile wrapper gradient" 
           aria-labelledby="profile"
           sx={{
             display: 'flex',

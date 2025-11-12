@@ -1,4 +1,20 @@
-@import "tailwindcss";
-
 /* css reset */
 @import url("./styles/reset.css");
+
+@import "tailwindcss";
+
+.gradient {
+  background-image: linear-gradient(
+    320deg,
+    hsl(285deg 57% 33%) 0%,
+    hsl(286deg 51% 37%) 24%,
+    hsl(287deg 45% 42%) 37%,
+    hsl(288deg 40% 46%) 44%,
+    hsl(290deg 37% 51%) 46%,
+    hsl(291deg 40% 56%) 47%,
+    hsl(292deg 43% 62%) 47%,
+    hsl(293deg 47% 67%) 48%,
+    hsl(294deg 51% 73%) 54%,
+    hsl(295deg 58% 79%) 99%
+  );
+}

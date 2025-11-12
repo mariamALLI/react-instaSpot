@@ -135,6 +135,7 @@ const Cards = forwardRef((props, ref) => {
 
   return (
     <Box 
+    className="gradient"
       sx={{ 
         display: 'grid',
         gridTemplateColumns: {
